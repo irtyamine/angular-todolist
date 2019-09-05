@@ -12,6 +12,11 @@ import { AddTodoComponent } from './components/todos/add-todo/add-todo.component
 import { AboutComponent } from './components/pages/about/about.component';
 import { httpInterceptProviders } from './http-interceptors';
 
+import { NgRedux, NgReduxModule} from '@angular-redux/store';
+import {IAppState, rootReducer} from './store';
+
+import { StoreModule } from "@ngrx/store";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,9 +30,17 @@ import { httpInterceptProviders } from './http-interceptors';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgReduxModule,
+    StoreModule.forRoot({})
   ],
   providers: [httpInterceptProviders],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(ngRedux: NgRedux<IAppState>){
+    ngRedux.configureStore(rootReducer,{}); 
+  }
+
+ }
