@@ -13,8 +13,9 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { httpInterceptProviders } from './http-interceptors';
 
 import { NgRedux, NgReduxModule, DevToolsExtension} from '@angular-redux/store';
-import {IAppState, rootReducer} from './store';
 
+import { rootReducer, IAppState, INITIAL_STATE } from '../store'; // < New
+import { ToDoActions } from './app.actions'; // <- New
 
 
 @NgModule({
@@ -33,13 +34,13 @@ import {IAppState, rootReducer} from './store';
     FormsModule,
     NgReduxModule,
   ],
-  providers: [httpInterceptProviders],
+  providers: [httpInterceptProviders , ToDoActions ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 
   constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer, {});
+    ngRedux.configureStore(rootReducer, INITIAL_STATE);
   }
 
  }
